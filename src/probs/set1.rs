@@ -1,5 +1,5 @@
-use cryptopals::util::*;
-use cryptopals::crypt::*;
+use crate::util::*;
+use crate::crypt::analysis;
 
 
 pub fn prob1() {
@@ -27,7 +27,7 @@ pub fn prob2() {
 pub fn prob3() {
     let ctxt_hex = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
     let ctxt = fromhex(ctxt_hex).unwrap();
-    let cand = find_single_xor_key(&ctxt, is_en, 5);
+    let cand = analysis::find_single_xor_key(&ctxt, is_en, 5);
     println!("Problem 3: Candidates are");
     for key in cand {
         let dec = xor(&ctxt, &vec![key]);
@@ -49,7 +49,7 @@ pub fn prob4() {
     for line in reader.lines() {
         if let Ok(v) = line {
             if let Ok(bytes) = fromhex(&v) {
-                let key = find_single_xor_key(&bytes, is_en, 1)[0];
+                let key = analysis::find_single_xor_key(&bytes, is_en, 1)[0];
                 let ctxt = xor(&bytes, &vec![key]);
                 let score = count(&ctxt, is_en) as i32;
                 scores.push((ctxt, key, score));
@@ -111,7 +111,7 @@ pub fn prob6() {
         let mut keys: Vec<Vec<u8>> = Vec::new();
         for i in 0..len {
             let seg: Vec<u8> = data.iter().skip(i).step_by(len).copied().collect();   
-            let found = find_single_xor_key(&seg, is_en, 1);
+            let found = analysis::find_xor_keyfind_single_xor_key(&seg, is_en, 1);
             let mut key: Vec<u8> = Vec::new();
             for k in found {
                 let dec = xor(&data[0..40], &vec![k]);

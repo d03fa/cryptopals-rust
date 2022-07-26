@@ -1,6 +1,8 @@
 
 mod probs;
- 
+mod crypt;
+mod util; 
+
 fn do_set1() {
     probs::set1::prob1();
     probs::set1::prob2();
@@ -16,6 +18,7 @@ fn do_set2() {
     probs::set2::prob9();
     probs::set2::prob10();
     probs::set2::prob11();
+    probs::set2::prob12();
 }
 
 fn main() {
